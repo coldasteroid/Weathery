@@ -3,6 +3,8 @@ import { Cloud, MapPin, Calendar, Upload, CloudRain, Sun } from 'lucide-react';
 import { useWeather } from '../context/WeatherContext';
 import { parseWeatherFile } from '../utils/weatherData';
 
+import { toast } from 'sonner';
+
 export function CurrentWeather() {
   const { currentWeather, loading, setWeatherData } = useWeather();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -14,9 +16,15 @@ export function CurrentWeather() {
     try {
       const data = await parseWeatherFile(file);
       setWeatherData(data);
+      toast.success("Weather data uploaded successfully!");
     } catch (error) {
       console.error("Error uploading file:", error);
-      alert("Failed to parse weather file");
+      toast.error("Failed to parse weather file");
+    } finally {
+      // Reset input so the same file can be uploaded again if needed
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     }
   };
 

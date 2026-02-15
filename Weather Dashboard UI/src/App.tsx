@@ -18,6 +18,8 @@ if (!clerkPubKey) {
     throw new Error("Missing Publishable Key");
 }
 
+import { Toaster } from 'sonner';
+
 export default function App() {
     const [activeTab, setActiveTab] = useState('weather');
 
@@ -79,6 +81,7 @@ export default function App() {
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                 </Router>
+                <Toaster richColors position="top-center" />
             </WeatherProvider>
         </ClerkProvider>
     );

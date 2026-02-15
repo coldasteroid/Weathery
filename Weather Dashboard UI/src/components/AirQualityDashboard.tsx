@@ -7,6 +7,7 @@ import { PollutantBreakdown } from './aqi/PollutantBreakdown';
 
 import { AQIMap } from './aqi/AQIMap';
 
+import { toast } from 'sonner';
 import { parseAirQualityFile } from '../utils/airQualityParser';
 
 export function AirQualityDashboard() {
@@ -20,9 +21,13 @@ export function AirQualityDashboard() {
         try {
             const result = await parseAirQualityFile(file);
             setData(result);
+            toast.success("Air quality data uploaded successfully!");
         } catch (error) {
             console.error("Error uploading file:", error);
-            alert("Failed to parse air quality file");
+            toast.error("Failed to parse air quality file");
+        } finally {
+            // Reset input
+            event.target.value = '';
         }
     };
 
